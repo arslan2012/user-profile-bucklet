@@ -10,8 +10,17 @@ import fallback from '@blocklet/sdk/lib/middlewares/fallback';
 
 import logger from './libs/logger';
 import routes from './routes';
+import { AppDataSource } from './libs/db';
 
 dotenv.config();
+
+AppDataSource.initialize()
+  .then(() => {
+    logger.info('Data Source has been initialized!');
+  })
+  .catch((err) => {
+    logger.error('Error during Data Source initialization', err);
+  });
 
 const { name, version } = require('../../package.json');
 
